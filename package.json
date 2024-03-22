@@ -1,0 +1,25 @@
+{
+  "name": "shoot",
+  "version": "1.0.0",
+  "description": "Game",
+  "main": "app.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node app.js",
+    "runs":"nodemon app.js"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "S.Mohammed Junaith",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.1",
+    "path": "^0.12.7",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
