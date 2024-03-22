@@ -10,7 +10,7 @@ class Game{
     this.Player = [];
     this.Enemy =[];
     this.time = 0
-    this.Gamer = new Gamer(this.GAME.width/2,this.GAME.height-100,50,50,100)
+    this.Gamer = new Gamer(this.GAME.width/2,this.GAME.height-100,100,100,100)
   }
   clear(){
     this.ctx.clearRect(0,0,this.GAME.width,this.GAME.height);
