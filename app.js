@@ -10,9 +10,8 @@ const io = new Server(server);
 
 app.use(express.static(path.join('Frontend')));
 const Game = new GAME()
+
 io.on('connection', (socket) => {
-  
-  
   socket.on('disconnect', () => {
     console.log('user disconnected');
     Game.removePlayerInfo(socket.id)
@@ -22,12 +21,15 @@ io.on('connection', (socket) => {
     const id = socket.id
     io.emit("gamer_info",x,y,id,health)
     Game.getPlayerInfo(x,y,id)
-    console.log(Game.Player)
     Game.emitPlayer(io)
   });
   socket.on("player_update",(x,y,id,health)=>{
     io.emit("player_update",x,y,id,health)
-  })
+  //  console.log(Game.enemyLocation())
+    if(Game.delay(50)){
+      io.emit("enemy_add",Game.enemyLocation())
+    }
+  });
   
   
 });
