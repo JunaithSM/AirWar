@@ -35,7 +35,7 @@ class GAME{
   }
   enemyLocation(){
     let y=-Math.floor(Math.random()*10),
-    x=Math.floor(Math.random()*750)+80,
+    x=Math.floor(Math.random()*650)+80,
     w=Math.floor(Math.random()*25)+50;
     return [x,y,w,w]
   }
