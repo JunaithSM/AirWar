@@ -23,8 +23,11 @@ class Gamer extends Character{
     }
     this.img= document.getElementById("jetImg")
   }
-  movement(){
-    this.x = this.touch.x,this.y=this.touch.y
+  movement(game){
+    if(this.touch.x <0||this.touch.x >game.width-this.width){return}
+    this.x = this.touch.x
+    if(this.touch.y <0||this.touch.y >game.height-this.height){return}
+    this.y=this.touch.y
   }
 }
 class Player extends Character{

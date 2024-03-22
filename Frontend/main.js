@@ -11,6 +11,7 @@ Area.run_game()
 const animate = ()=>{
     Area.clear()
     Area.handle_characters()
+    Area.moveBack()
     socket.emit("player_update",Area.Gamer.x,Area.Gamer.y,Area.Gamer.id,Area.Gamer.health)
     requestAnimationFrame(animate);
 }
@@ -42,10 +43,11 @@ socket.on("player_update",(x,y,id,health)=>{
       Area.Player[i].x=x
       Area.Player[i].y=y
       Area.Player[i].health=health
-      
     }
   }
-  
+})
+socket.on("enemy_add",(e)=>{
+  Area.create_enemy(e[0],e[1],e[2],e[3])
 })
 socket.on("player_remove",(id)=>{
   for(let i=0;i<Area.Player.length;i++){
