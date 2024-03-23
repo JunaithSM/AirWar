@@ -2,27 +2,43 @@
 import {Gamer,Player} from "./player.js"
 import {Enemy} from "./enemy.js"
 class Game{
-  constructor(){
+  constructor(socket){
     this.GAME = document.getElementById("game");
     this.ctx = this.GAME.getContext("2d");
     this.GAME.width = window.innerWidth;
     this.GAME.height = window.innerHeight;
     this.Player = [];
     this.Enemy =[];
+    this.socket = socket
     this.background()
     this.Gamer = new Gamer(this.GAME.width/2,this.GAME.height-100,100,100,100)
   }
   clear(){
     this.ctx.clearRect(0,0,this.GAME.width,this.GAME.height);
   }
-  
+  collusion(f,s){
+    if(f.x <s.x+s.width&&f.y >s.y+s.height&&s.x <f.x+f.width&&s.y >f.y+f.height){
+      return true
+    }else{return false}
+  }
   handle_gamer(){
     this.Gamer.draw(this.ctx);
     this.Gamer.movement(this.GAME)
+    this.Gamer.handle_bullet(this.ctx)
+    if(this.Gamer.delay(10)&&this.Gamer.shoot){
+        this.Gamer.create_bullet()
+        this.socket.emit("bullet_add",this.Gamer.id)
+    }
   }
+  
   run_gamer(){
+    window.addEventListener("touchstart",()=>{
+      this.Gamer.shoot = true;
+    })
+    window.addEventListener("touchend",()=>{
+      this.Gamer.shoot = false;
+    })
     window.addEventListener("touchmove",(ev)=>{
-      
       this.Gamer.touch.x = ev.touches[0].clientX-this.Gamer.width/2
       this.Gamer.touch.y = ev.touches[0].clientY-this.Gamer.height/2
     })
@@ -34,6 +50,7 @@ class Game{
     for(let i =0;i<this.Player.length;i++){
       const p = this.Player[i]
       p.draw(this.ctx)
+      p.handle_bullet(this.ctx)
     }
   }
   handle_enemys(){
@@ -54,7 +71,6 @@ class Game{
     this.handle_gamer()
     this.handle_player()
     this.handle_enemys()
-    
     //this.moveBack(this.bctx)
   }
   background(){

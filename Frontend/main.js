@@ -4,7 +4,7 @@ function log(txt){
   h.innerText = txt
 }
 const socket = io()
-const Area = new Game()
+const Area = new Game(socket)
 //window.addEventListener("load",()=>{
 
 Area.run_game()
@@ -13,6 +13,7 @@ const animate = ()=>{
     Area.handle_characters()
     Area.moveBack()
     socket.emit("player_update",Area.Gamer.x,Area.Gamer.y,Area.Gamer.id,Area.Gamer.health)
+    //Area.emit_gamer(socket)
     requestAnimationFrame(animate);
 }
 animate()
@@ -49,6 +50,14 @@ socket.on("player_update",(x,y,id,health)=>{
 socket.on("enemy_add",(e)=>{
   Area.create_enemy(e[0],e[1],e[2],e[3])
 })
+socket.on("bullet_add",(id)=>{
+  for(let i=0;i<Area.Player.length;i++){
+    if(id == Area.Player[i].id){
+      Area.Player[i].create_bullet()
+    }
+  }
+});
+
 socket.on("player_remove",(id)=>{
   for(let i=0;i<Area.Player.length;i++){
     if(id == Area.Player[i].id){
