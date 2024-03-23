@@ -30,7 +30,9 @@ io.on('connection', (socket) => {
       io.emit("enemy_add",Game.enemyLocation())
     }
   });
-  
+  socket.on('bullet_add',(id)=>{
+    io.emit("bullet_add",id)
+  })
   
 });
 

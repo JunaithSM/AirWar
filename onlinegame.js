@@ -2,6 +2,9 @@ class GAME{
   constructor(){
     this.Player=[]
     this.time=0
+    this.enemy={
+      x:0
+    }
   }
   getPlayerInfo(x,y,id){
     for( let i =0;i<this.Player.length;i++){
@@ -34,9 +37,13 @@ class GAME{
     }
   }
   enemyLocation(){
-    let y=-Math.floor(Math.random()*10),
-    x=Math.floor(Math.random()*650)+80,
-    w=Math.floor(Math.random()*25)+50;
+    let y=-Math.floor(Math.random()*10),x=Math.floor(((Math.random()*650)+110)/100)*100
+    while (this.enemy.x == x){
+      x=Math.floor(((Math.random()*650)+110)/100)*100
+    }
+   // w=Math.floor(Math.random()*25)+50;
+    let w=100
+    this.enemy.x = x
     return [x,y,w,w]
   }
   delay(d){
