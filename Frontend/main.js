@@ -5,7 +5,7 @@ function log(txt){
 }
 const socket = io()
 const Area = new Game(socket)
-//window.addEventListener("load",()=>{
+window.addEventListener("load",()=>{
 
 Area.run_game()
 const animate = ()=>{
@@ -17,7 +17,7 @@ const animate = ()=>{
     requestAnimationFrame(animate);
 }
 animate()
-
+})
 socket.emit("gamer_info",Area.Gamer.x,Area.Gamer.y,Area.Gamer.health)
 let idcond = true;
 socket.on('gamer_info',(x,y,id,health)=>{

@@ -14,12 +14,20 @@ class Character{
     this.time=0
   }
   draw(ctx){
+    if(document.getElementById(`${this.img}Shadow`)){
+      this.shadow(ctx)
+    }
     ctx.beginPath()
     ctx.drawImage(document.getElementById(this.img),this.x, this.y, this.width, this.height)
     ctx.closePath();
     this.healthBar(ctx)
   }
- 
+  shadow(ctx){
+    ctx.beginPath()
+    ctx.drawImage(document.getElementById(`${this.img}Shadow`),this.x-10, this.y-10, this.width*0.75, this.height*0.75)
+    ctx.closePath()
+   
+  }
   healthBar(ctx){
     if(this.health!=this.MaxHealth){
     ctx.beginPath()
@@ -42,10 +50,9 @@ class Character{
   }
   handle_bullet(obj){
     for(let i = 0;i<this.bullet.length;i++){
-      console.log(obj)
+      
       this.bullet[i].draw(obj.ctx)
       this.bullet[i].movement()
-      console.log(obj)
       if(this.bullet[i].y <this.bullet[i].width){
         this.bullet.splice(i,1)
         i--;

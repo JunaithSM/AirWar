@@ -1,6 +1,7 @@
 //window.addEventListener("load",()=>{
 import {Gamer,Player} from "./player.js"
 import {Enemy} from "./enemy.js"
+import {Shadow} from "./shadow.js"
 class Game{
   constructor(socket){
     this.GAME = document.getElementById("game");
@@ -93,11 +94,15 @@ class Game{
     this.bctx.drawImage(this.back.img,this.back.x, this.back.y, this.BACK.width, this.BACK.height)
     this.bctx.drawImage(this.back.img,this.back.x, this.back.y-this.BACK.height, this.BACK.width, this.BACK.height)
     this.bctx.closePath();
-    
+  }
+  run_shadow(){
+    const img = ["jetImg","jet1Img","jet2Img","jet3Img","jet4Img"]
+    const shadow = new Shadow(img)
+    shadow.create_shadow()
   }
   run_game(){
     this.run_gamer()
-    
+    this.run_shadow()
   }
 }
 export {Game};
