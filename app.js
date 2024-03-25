@@ -27,7 +27,9 @@ io.on('connection', (socket) => {
     io.emit("player_update",x,y,id,health)
   //  console.log(Game.enemyLocation())
     if(Game.delay(100)){
+      for(let i=0;i<2;i++){
       io.emit("enemy_add",Game.enemyLocation())
+      }
     }
   });
   socket.on('bullet_add',(id)=>{
