@@ -10,26 +10,59 @@ class Character{
     this.img="Img";
     this.bullet = []
     this.shoot = false;
+    this.MaxHealth=health 
+    this.time=0
   }
   draw(ctx){
     ctx.beginPath()
     ctx.drawImage(document.getElementById(this.img),this.x, this.y, this.width, this.height)
     ctx.closePath();
+    this.healthBar(ctx)
   }
-  create_bullet(){
+ 
+  healthBar(ctx){
+    if(this.health!=this.MaxHealth){
+    ctx.beginPath()
+    ctx.fillStyle = "#11111177"
+    ctx.fillRect(this.x,this.y,this.width,10)
+    ctx.fillStyle = `hsl(${(this.health/this.MaxHealth)*100},100%,40%`
+    ctx.fillRect(this.x,this.y,(this.health/this.MaxHealth)*this.width,10)
     
-    this.bullet.push(new Bullet(this.x+this.width/2,this.y+this.height/2,10))
-  }
-  handle_bullet(ctx){
-    for(let i = 0;i<this.bullet.length;i++){
-      this.bullet[i].draw(ctx)
-      this.bullet[i].movement()
-      if(this.bullet.y <this.bullet.width){
-        this.bullet.splice(i,1)
-        i--
-      }
+    ctx.fill()
+      ctx.closePath()
     }
   }
+  collusion(f,s){
+    if(f.x <s.x+s.width&&f.y >s.y+s.height&&s.x <f.x+f.width&&s.y >f.y+f.height){
+      return true
+    }else{return false}
+  }
+  create_bullet(){
+    this.bullet.push(new Bullet(this.x+this.width/2,this.y+this.height/2,10))
+  }
+  handle_bullet(obj){
+    for(let i = 0;i<this.bullet.length;i++){
+      console.log(obj)
+      this.bullet[i].draw(obj.ctx)
+      this.bullet[i].movement()
+      console.log(obj)
+      if(this.bullet[i].y <this.bullet[i].width){
+        this.bullet.splice(i,1)
+        i--;
+        continue;
+      }
+      for(let j = 0;j<obj.Enemy.length;j++){
+        if(obj.collusion(this.bullet[i],obj.Enemy[j])){
+          obj.Enemy[j].health-=this.bullet[i].damage
+          this.bullet.splice(i,1)
+        i--;
+        break;
+        }
+    }
+      
+    }
+  }
+  
 }
 
 class Gamer extends Character{
@@ -55,6 +88,7 @@ class Gamer extends Character{
       return false;
     }
   }
+  
 }
 class Player extends Character{
   constructor(x,y,w,h,health,id){

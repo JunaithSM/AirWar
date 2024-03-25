@@ -17,14 +17,14 @@ class Game{
     this.ctx.clearRect(0,0,this.GAME.width,this.GAME.height);
   }
   collusion(f,s){
-    if(f.x <s.x+s.width&&f.y >s.y+s.height&&s.x <f.x+f.width&&s.y >f.y+f.height){
+    if(f.x <s.x+s.width&&f.y <s.y+s.height&&s.x <f.x+f.width&&s.y <f.y+f.height){
       return true
     }else{return false}
   }
   handle_gamer(){
     this.Gamer.draw(this.ctx);
     this.Gamer.movement(this.GAME)
-    this.Gamer.handle_bullet(this.ctx)
+    this.Gamer.handle_bullet(this)
     if(this.Gamer.delay(10)&&this.Gamer.shoot){
         this.Gamer.create_bullet()
         this.socket.emit("bullet_add",this.Gamer.id)
@@ -50,7 +50,7 @@ class Game{
     for(let i =0;i<this.Player.length;i++){
       const p = this.Player[i]
       p.draw(this.ctx)
-      p.handle_bullet(this.ctx)
+      p.handle_bullet(this);
     }
   }
   handle_enemys(){
@@ -58,20 +58,20 @@ class Game{
       const p = this.Enemy[i]
       p.draw(this.ctx)
       p.movement()
-      if(this.Enemy[i].y> this.GAME.height){
-        this.Enemy.splice(i,1)
-        i--
+      if(this.Enemy[i].y> this.GAME.height||this.Enemy[i].health<=0){
+        this.Enemy.splice(i,1);
+        i--;
+        continue;
       }
     }
   }
   create_enemy(x,y,w,h){
-      this.Enemy.push(new Enemy(x,y,w,h,1))
+      this.Enemy.push(new Enemy(x,y,w,h,100))
   }
   handle_characters(){
     this.handle_gamer()
     this.handle_player()
     this.handle_enemys()
-    //this.moveBack(this.bctx)
   }
   background(){
     this.BACK=document.getElementById("background")
