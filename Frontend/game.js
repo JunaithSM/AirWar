@@ -2,6 +2,7 @@
 import {Gamer,Player} from "./player.js"
 import {Enemy} from "./enemy.js"
 import {Shadow} from "./shadow.js"
+import {Blast} from "./effect.js"
 class Game{
   constructor(socket){
     this.GAME = document.getElementById("game");
@@ -10,6 +11,7 @@ class Game{
     this.GAME.height = window.innerHeight;
     this.Player = [];
     this.Enemy =[];
+    this.Effect =[];
     this.socket = socket
     this.background()
     this.Gamer = new Gamer(this.GAME.width/2,this.GAME.height-100,100,100,100)
@@ -59,7 +61,8 @@ class Game{
       const p = this.Enemy[i]
       p.draw(this.ctx)
       p.movement()
-      if(this.Enemy[i].y> this.GAME.height||this.Enemy[i].health<=0){
+      if(p.y> this.GAME.height||p.health<=0){
+        this.create_effect(p.x,p.y,p.width,p.height)
         this.Enemy.splice(i,1);
         i--;
         continue;
@@ -69,10 +72,24 @@ class Game{
   create_enemy(x,y,w,h){
       this.Enemy.push(new Enemy(x,y,w,h,100))
   }
+  create_effect(x,y,w,h){
+    this.Effect.push(new Blast(x,y,w,h))
+  }
+  handle_effect(){
+    for(let i =0;i<this.Effect.length;i++){
+      this.Effect[i].animate(this.ctx)
+      if(this.Effect[i].exit){
+        this.Effect.splice(i,1);
+        i--;
+        continue;
+      }
+    }
+  }
   handle_characters(){
     this.handle_gamer()
     this.handle_player()
     this.handle_enemys()
+    this.handle_effect()
   }
   background(){
     this.BACK=document.getElementById("background")
