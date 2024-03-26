@@ -37,7 +37,7 @@ class GAME{
     }
   }
   enemyLocation(){
-    let y=-Math.floor(Math.random()*10),x=Math.floor(((Math.random()*650))/100)*100
+    let y=-Math.floor(Math.random()*10)-75,x=Math.floor(((Math.random()*650))/100)*100
     while (this.enemy.x == x){
       x=Math.floor(((Math.random()*650))/100)*100
     }
