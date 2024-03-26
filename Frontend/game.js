@@ -14,7 +14,7 @@ class Game{
     this.Effect =[];
     this.socket = socket
     this.background()
-    this.Gamer = new Gamer(this.GAME.width/2,this.GAME.height-100,100,100,100)
+    this.Gamer = new Gamer(this.GAME.width/2,this.GAME.height-100,75,75,100)
   }
   clear(){
     this.ctx.clearRect(0,0,this.GAME.width,this.GAME.height);
@@ -43,7 +43,9 @@ class Game{
     })
     window.addEventListener("touchend",()=>{
       this.Gamer.shoot = false;
+      if(this.Gamer.health){
       this.create_effect(this.Gamer.x,this.Gamer.y,this.Gamer.width,this.Gamer.height)
+      }
       this.Gamer.health=0
     })
     window.addEventListener("touchmove",(ev)=>{
@@ -52,7 +54,7 @@ class Game{
     })
   }
   create_player(x,y,id,health){
-    this.Player.push(new Player(x,y,100,100,health,id));
+    this.Player.push(new Player(x,y,75,75,health,id));
   }
   handle_player(){
     for(let i =0;i<this.Player.length;i++){
