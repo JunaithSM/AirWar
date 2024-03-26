@@ -31,9 +31,9 @@ class Character{
     if(this.health!=this.MaxHealth){
     ctx.beginPath()
     ctx.fillStyle = "#11111177"
-    ctx.fillRect(this.x,this.y,this.width,10)
+    ctx.fillRect(this.x,this.y,this.width,5)
     ctx.fillStyle = `hsl(${(this.health/this.MaxHealth)*100},100%,40%`
-    ctx.fillRect(this.x,this.y,(this.health/this.MaxHealth)*this.width,10)
+    ctx.fillRect(this.x,this.y,(this.health/this.MaxHealth)*this.width,5)
     
     ctx.fill()
       ctx.closePath()
