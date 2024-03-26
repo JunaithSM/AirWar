@@ -13,14 +13,14 @@ const Game = new GAME()
 
 io.on('connection', (socket) => {
   socket.on('disconnect', () => {
-    //console.log('user disconnected');
+   // console.log('user disconnected');
     Game.removePlayerInfo(socket.id)
     io.emit("player_remove",socket.id)
   });
   socket.on("gamer_info",(x,y,health)=>{
     const id = socket.id
     io.emit("gamer_info",x,y,id,health)
-    Game.getPlayerInfo(x,y,id)
+    Game.getPlayerInfo(x,y,id,health)
     Game.emitPlayer(io)
   });
   socket.on("player_update",(x,y,id,health)=>{
