@@ -42,7 +42,7 @@ class GAME{
       x=Math.floor(((Math.random()*650))/100)*100
     }
    // w=Math.floor(Math.random()*25)+50;
-    let w=100
+    let w=75
     this.enemy.x = x
     return [x,y,w,w]
   }
