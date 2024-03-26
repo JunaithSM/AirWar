@@ -11,7 +11,6 @@ class Character{
     this.bullet = []
     this.shoot = false;
     this.MaxHealth=health 
-    this.time=0
   }
   draw(ctx){
     if(document.getElementById(`${this.img}Shadow`)){
@@ -40,17 +39,12 @@ class Character{
       ctx.closePath()
     }
   }
-  collusion(f,s){
-    if(f.x <s.x+s.width&&f.y >s.y+s.height&&s.x <f.x+f.width&&s.y >f.y+f.height){
-      return true
-    }else{return false}
-  }
   create_bullet(){
     this.bullet.push(new Bullet(this.x+this.width/2,this.y+this.height/2,10))
   }
+ 
   handle_bullet(obj){
     for(let i = 0;i<this.bullet.length;i++){
-      
       this.bullet[i].draw(obj.ctx)
       this.bullet[i].movement()
       if(this.bullet[i].y <this.bullet[i].width){
