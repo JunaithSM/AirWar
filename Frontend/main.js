@@ -5,16 +5,25 @@ function log(txt){
 }
 const socket = io()
 const Area = new Game(socket)
+let p=0
 window.addEventListener("load",()=>{
 
 Area.run_game()
+let c = true,t=0,f=0
 const animate = ()=>{
     Area.clear()
     Area.handle_characters()
     Area.moveBack()
     socket.emit("player_update",Area.Gamer.x,Area.Gamer.y,Area.Gamer.id,Area.Gamer.health)
-    //Area.emit_gamer(socket)
-    requestAnimationFrame(animate);
+    let e = new Date().getTime()
+    f++
+    if(e-t>=1000){
+     // log(f+" fps\n"++" ping")
+      f=0
+      c=true
+      t = new Date().getTime()
+    }
+   requestAnimationFrame(animate)
 }
 animate()
 })
@@ -46,6 +55,7 @@ socket.on("player_update",(x,y,id,health)=>{
       Area.Player[i].health=health
     }
   }
+  p++
 })
 socket.on("enemy_add",(e)=>{
   Area.create_enemy(e[0],e[1],e[2],e[3])

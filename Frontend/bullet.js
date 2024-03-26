@@ -5,7 +5,7 @@ class Bullet{
     this.height=10
     this.x = x-this.width/2;
     this.y=y-this.height/2
-    this.speed = 10
+    this.speed = 30
     this.img = document.getElementById("Img");
   }
   draw(ctx){

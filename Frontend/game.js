@@ -25,10 +25,13 @@ class Game{
     }else{return false}
   }
   handle_gamer(){
+    if(this.Gamer.health<=0){
+      return
+    }
     this.Gamer.draw(this.ctx);
     this.Gamer.movement(this.GAME)
     this.Gamer.handle_bullet(this)
-    if(this.Gamer.delay(10)&&this.Gamer.shoot){
+    if(this.Gamer.delay(5)&&this.Gamer.shoot){
         this.Gamer.create_bullet()
         this.socket.emit("bullet_add",this.Gamer.id)
     }
@@ -40,6 +43,8 @@ class Game{
     })
     window.addEventListener("touchend",()=>{
       this.Gamer.shoot = false;
+      this.create_effect(this.Gamer.x,this.Gamer.y,this.Gamer.width,this.Gamer.height)
+      this.Gamer.health=0
     })
     window.addEventListener("touchmove",(ev)=>{
       this.Gamer.touch.x = ev.touches[0].clientX-this.Gamer.width/2
@@ -52,6 +57,12 @@ class Game{
   handle_player(){
     for(let i =0;i<this.Player.length;i++){
       const p = this.Player[i]
+      if(p.health<=0){
+        this.create_effect(p.x,p.y,p.width,p.height)
+        this.Player.splice(i,1);
+        i--;
+        continue;
+      }
       p.draw(this.ctx)
       p.handle_bullet(this);
     }
@@ -102,7 +113,7 @@ class Game{
   }
  moveBack(ctx){
    this.bctx.clearRect(0,0,this.BACK.width,this.BACK.height)
-    this.back.y+=20
+    this.back.y+=10
     if(this.back.y>=this.BACK.height){
       this.back.y=0
     }
