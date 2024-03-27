@@ -19,6 +19,7 @@ img{
 }
 #log{
   position: absolute;
-  z-index:2;background:white;
-  
+  z-index:2;
+  color: white;
+  font-family: "Mulish", sans-serif;
 }
