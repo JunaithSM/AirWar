@@ -20,16 +20,18 @@ class Blast extends Effect{
   constructor(x,y,w,h){
     super(x,y,w,h)
     this.img="blastImg"
-   this.sw=92.8;this.sh=100
+    this.imgD = document.getElementById("blastImg")
+   this.sw=this.imgD.width/4;this.sh=this.imgD.height/2
+   this.delay=3
   }
   animate(ctx){
     this.time=(this.time>5000)?0:this.time+1
     if(this.time%this.delay==0){
       this.sx+=this.sw;
-      if(this.sx>835){
+      if(this.sx>this.imgD.width){
         this.sx=0
         this.sy+=this.sh
-        if(this.sy > 900){
+        if(this.sy > this.imgD.height){
           this.sy=0
           this.exit=true
           return;

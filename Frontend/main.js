@@ -1,4 +1,5 @@
 import {Game} from "./game.js"
+import {Res} from "./res.js"
 function log(txt){
   const h= document.getElementById("log")
   h.innerText = txt
@@ -14,11 +15,12 @@ const animate = ()=>{
     Area.clear()
     Area.handle_characters()
     Area.moveBack()
-    socket.emit("player_update",Area.Gamer.x,Area.Gamer.y,Area.Gamer.id,Area.Gamer.health)
+    socket.emit("player_update",Area.Gamer.x/Res,Area.Gamer.y/Res,Area.Gamer.id,Area.Gamer.health)
     let e = new Date().getTime()
     f++
     if(e-t>=1000){
-     // log(f+" fps\n"++" ping")
+      let gr = ["Very Low","Low","Medium","High","Ultra","Ultra High"]
+     log("Render: "+f+" fps\n"+"Graphics: "+gr[Math.floor(Res)])
       f=0
       c=true
       t = new Date().getTime()
@@ -27,7 +29,7 @@ const animate = ()=>{
 }
 animate()
 })
-socket.emit("gamer_info",Area.Gamer.x,Area.Gamer.y,Area.Gamer.health)
+socket.emit("gamer_info",Area.Gamer.x/Res,Area.Gamer.y/Res,Area.Gamer.health)
 let idcond = true;
 socket.on('gamer_info',(x,y,id,health)=>{
   if(idcond){
@@ -45,20 +47,20 @@ socket.on("player_info",(x,y,id,health)=>{
     }
   }
   Area.create_player(x,y,id,health)
-  alert(i+" player joined "+id+" "+Area.Gamer.id)
+ // alert(i+" player joined "+id+" "+Area.Gamer.id)
 })
 socket.on("player_update",(x,y,id,health)=>{
   for(let i=0;i<Area.Player.length;i++){
     if(id == Area.Player[i].id && id != Area.Gamer.id){
-      Area.Player[i].x=x
-      Area.Player[i].y=y
+      Area.Player[i].x=x*Res
+      Area.Player[i].y=y*Res
       Area.Player[i].health=health
     }
   }
   p++
 })
 socket.on("enemy_add",(e)=>{
-  Area.create_enemy(e[0],e[1],e[2],e[3])
+  Area.create_enemy(e[0],e[1],e[2],e[3],e[4])
 })
 socket.on("bullet_add",(id)=>{
   for(let i=0;i<Area.Player.length;i++){

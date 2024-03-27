@@ -1,11 +1,15 @@
 import {Character} from "./player.js"
 
 class Enemy extends Character{
-  constructor(x,y,w,h,health){
-    super(x,y,w,h,health)
-    this.speed = 1
-    this.allImg = ["jet1Img","jet3Img","jet2Img","jet4Img"]
-    this.img=this.allImg[Math.floor(Math.random()*4)]
+  constructor(x,y,w,h,img){
+    super(x,y,w,h,100)
+    this.allHealth=[100,200,300,400,500,600]
+    this.health = this.allHealth[img]
+    this.MaxHealth= this.health
+    this.speed = 1*this.res
+    this.allImg = ["jet1Img","jet3Img","jet2Img","jet4Img","jet5Img","jet6Img"]
+    this.img=this.allImg[img]
+    this.rotate=0
   }
   movement(){
     this.y+= this.speed

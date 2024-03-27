@@ -3,12 +3,13 @@ import {Gamer,Player} from "./player.js"
 import {Enemy} from "./enemy.js"
 import {Shadow} from "./shadow.js"
 import {Blast} from "./effect.js"
+import {Res} from "./res.js"
 class Game{
   constructor(socket){
     this.GAME = document.getElementById("game");
     this.ctx = this.GAME.getContext("2d");
-    this.GAME.width = window.innerWidth;
-    this.GAME.height = window.innerHeight;
+    this.GAME.width = window.innerWidth*Res;
+    this.GAME.height = window.innerHeight*Res;
     this.Player = [];
     this.Enemy =[];
     this.Effect =[];
@@ -49,8 +50,8 @@ class Game{
       this.Gamer.health=0
     })
     window.addEventListener("touchmove",(ev)=>{
-      this.Gamer.touch.x = ev.touches[0].clientX-this.Gamer.width/2
-      this.Gamer.touch.y = ev.touches[0].clientY-this.Gamer.height/2
+      this.Gamer.touch.x =( ev.touches[0].clientX*Res-this.Gamer.width/2)
+      this.Gamer.touch.y = (ev.touches[0].clientY*Res-this.Gamer.height/2)
     })
   }
   create_player(x,y,id,health){
@@ -82,8 +83,8 @@ class Game{
       }
     }
   }
-  create_enemy(x,y,w,h){
-      this.Enemy.push(new Enemy(x,y,w,h,100))
+  create_enemy(x,y,w,h,img){
+      this.Enemy.push(new Enemy(x,y,w,h,img))
   }
   create_effect(x,y,w,h){
     this.Effect.push(new Blast(x,y,w,h))
@@ -116,17 +117,18 @@ class Game{
  moveBack(ctx){
    this.bctx.clearRect(0,0,this.BACK.width,this.BACK.height)
     this.back.y+=10
-    if(this.back.y>=this.BACK.height){
+    if(this.back.y>=this.back.img.height){
       this.back.y=0
     }
+    let h= this.back.img.height,w=this.back.img.width
     this.bctx.beginPath()
-    this.bctx.drawImage(this.back.img,this.back.x, this.back.y+this.BACK.height, this.BACK.width, this.BACK.height)
-    this.bctx.drawImage(this.back.img,this.back.x, this.back.y, this.BACK.width, this.BACK.height)
-    this.bctx.drawImage(this.back.img,this.back.x, this.back.y-this.BACK.height, this.BACK.width, this.BACK.height)
+    this.bctx.drawImage(this.back.img,this.back.x, this.back.y+h, w, h)
+    this.bctx.drawImage(this.back.img,this.back.x, this.back.y, w, h)
+    this.bctx.drawImage(this.back.img,this.back.x, this.back.y-h, w, h)
     this.bctx.closePath();
   }
   run_shadow(){
-    const img = ["jetImg","jet1Img","jet2Img","jet3Img","jet4Img"]
+    const img = ["jetImg","jet1Img","jet2Img","jet3Img","jet4Img","jet5Img","jet6Img"]
     const shadow = new Shadow(img)
     shadow.create_shadow()
   }

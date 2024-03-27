@@ -1,46 +1,59 @@
 import {Bullet} from "./bullet.js"
+import {Res} from "./res.js"
 class Character{
   constructor(x,y,w,h,health){
-    this.x = x;
-    this.y = y;
-    this.width = w;
-    this.height = h;
+    this.res = Res
+    this.x = x*this.res;
+    this.y = y*this.res;
+    this.width = 75*this.res;
+    this.height = 75*this.res;
     this.health=health;
     this.id = 0
     this.img="Img";
     this.bullet = []
     this.shoot = false;
     this.MaxHealth=health 
+    this.rotate=0
+    this.name=""
   }
   draw(ctx){
     if(document.getElementById(`${this.img}Shadow`)){
       this.shadow(ctx)
     }
+    ctx.save()
     ctx.beginPath()
-    ctx.drawImage(document.getElementById(this.img),this.x, this.y, this.width, this.height)
+    ctx.translate(this.x+this.width/2,this.y+this.height/2)
+    ctx.rotate(this.rotate*Math.PI/180)
+    ctx.drawImage(document.getElementById(this.img),-this.width/2, -this.width/2, this.width, this.height)
     ctx.closePath();
+    ctx.restore()
     this.healthBar(ctx)
   }
   shadow(ctx){
+    let x = this.x-10,y=this.y-10,w=this.width*0.75,h=this.height*0.75;
+    ctx.save()
     ctx.beginPath()
-    ctx.drawImage(document.getElementById(`${this.img}Shadow`),this.x-10, this.y-10, this.width*0.75, this.height*0.75)
+    ctx.translate(x+w/2,y+h/2)
+    ctx.rotate(this.rotate*Math.PI/180)
+    ctx.beginPath()
+    ctx.drawImage(document.getElementById(`${this.img}Shadow`),-w/2, -h/2, w,h)
     ctx.closePath()
-   
+   ctx.restore()
   }
   healthBar(ctx){
     if(this.health!=this.MaxHealth){
     ctx.beginPath()
     ctx.fillStyle = "#11111177"
-    ctx.fillRect(this.x,this.y,this.width,5)
-    ctx.fillStyle = `hsl(${(this.health/this.MaxHealth)*100},100%,40%`
-    ctx.fillRect(this.x,this.y,(this.health/this.MaxHealth)*this.width,5)
+    ctx.fillRect(this.x,this.y,this.width,this.height*0.05)
+    ctx.fillStyle = `hsl(${(this.health/this.MaxHealth)*250},100%,40%`
+    ctx.fillRect(this.x,this.y,(this.health/this.MaxHealth)*this.width,this.height*0.05)
     
     ctx.fill()
       ctx.closePath()
     }
   }
   create_bullet(){
-    this.bullet.push(new Bullet(this.x+this.width/2,this.y+this.height/2,10))
+    this.bullet.push(new Bullet(this.x+this.width/2,this.y+this.height/2,25))
   }
  
   handle_bullet(obj){
