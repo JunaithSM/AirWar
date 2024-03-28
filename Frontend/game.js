@@ -142,7 +142,8 @@ class Game{
    let i= this.bg.i
     this.bctx.beginPath();
     j=i
-    let i1 = `${bgs[i]}${bgs[j]}Img`,img = document.getElementById(i1)
+    let i1 = `${bgs[i]}${bgs[j]}Img`
+      let img = document.getElementById(i1)
     let h= this.BACK.height,
      w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
      
