@@ -8,7 +8,8 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-app.use(express.static(path.join('Frontend')));
+app.use("/game",express.static(path.join('Frontend')));
+app.use("/",express.static(path.join('home')));
 const Game = new GAME()
 
 io.on('connection', (socket) => {
