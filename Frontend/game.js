@@ -119,6 +119,7 @@ class Game{
     this.bg={
       x:0,y:0,i:0,j:0,d:10,s:false,t:0
     }
+    this.bgImg=[["seaseaImg","seagreenImg","searockImg"],["greenseaImg","greengreenImg","greenrockImg"],["rockseaImg","rockgreenImg","rockrockImg"]]
   }
  
  moveBack(ctx){
@@ -142,7 +143,7 @@ class Game{
    let i= this.bg.i
     this.bctx.beginPath();
     j=i
-    let i1 = bgs[i]+bgs[j]+"Img"
+    let i1 = this.bgImg[i][j]
     let img = document.getElementById(i1.toString())
     let h= this.BACK.height,
      w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
@@ -150,13 +151,13 @@ class Game{
     this.bctx.drawImage(img,this.bg.x-10,this.bg.y,w,h)
     j=this.bg.j
    
-    let i2 = bgs[i]+bgs[j]+"Img"
+    let i2 = this.bgImg[i][j]
     img = document.getElementById(i2.toString())
      w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
      
     this.bctx.drawImage(img,this.bg.x-10,this.bg.y-this.BACK.height,w,h)
     i=j
-      let i3 = `${bgs[i]}${bgs[j]}Img`
+      let i3 = this.bgImg[i][j]
     img = document.getElementById(i3.toString())
      w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
      
