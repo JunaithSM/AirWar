@@ -1,0 +1,25 @@
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  overscroll-behavior: none; 
+}
+canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+}
+img{
+  display:none;
+}
+#log{
+  position: absolute;
+  z-index:2;
+  color: white;
+  font-family: "Teko", sans-serif;
+}
