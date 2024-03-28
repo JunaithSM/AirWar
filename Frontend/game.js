@@ -143,7 +143,7 @@ class Game{
     this.bctx.beginPath();
     j=i
     let i1 = bgs[i]+bgs[j]+"Img"
-    let img = document.getElementById(i1)
+    let img = document.getElementById(i1.toString())
     let h= this.BACK.height,
      w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
     
@@ -151,13 +151,13 @@ class Game{
     j=this.bg.j
    
     let i2 = bgs[i]+bgs[j]+"Img"
-    img = document.getElementById(i2)
+    img = document.getElementById(i2.toString())
      w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
      
     this.bctx.drawImage(img,this.bg.x-10,this.bg.y-this.BACK.height,w,h)
     i=j
       let i3 = `${bgs[i]}${bgs[j]}Img`
-    img = document.getElementById(i3)
+    img = document.getElementById(i3.toString())
      w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
      
     this.bctx.drawImage(img,this.bg.x-10,this.bg.y-this.BACK.height*2,w,h)
