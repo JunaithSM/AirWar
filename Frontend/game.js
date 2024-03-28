@@ -146,10 +146,10 @@ class Game{
       let img = document.getElementById(i1)
     let h= this.BACK.height,
      w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
-     
+     if(img){
     this.bctx.drawImage(img,this.bg.x-10,this.bg.y,w,h)
     j=this.bg.j
-   
+     }
     let i2 = `${bgs[i]}${bgs[j]}Img`
     img = document.getElementById(i2)
      w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
