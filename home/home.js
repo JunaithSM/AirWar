@@ -41,7 +41,12 @@ window.onerror = function() {
 };
 try {
   window.addEventListener("load",()=>{
-    LOADING.innerText = "Tap to continue"
+    LOADING.innerText = "100% LOADING..."
+    setTimeout(()=>{
+      LOADING.innerText = "Tap to continue"
+    LOADING.className = ""
+    },1000)
+    
     window.addEventListener("click",()=>{
       try {
         if(!document.getElementById("body1")) throw "error"
