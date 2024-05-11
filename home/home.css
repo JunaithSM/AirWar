@@ -8,12 +8,13 @@
 }
 #loading{
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
   font-size: 50px;
   width: 100%;
+  height: 100%;
   text-align: center;
+  z-index: 4;
+  background-color: white;
+  padding-top: 50%;
 }
 audio{
   display: none;
@@ -42,9 +43,6 @@ audio{
   100%{
     transform: rotate(360deg);
   }
-}
-#body1{
-  display: none;
 }
 button{
   border: none;

@@ -21,15 +21,15 @@ const bgMusic = document.getElementById("backgroundmusic")
 //load
 const LOADING  = document.getElementById("loading")
 var imgs = document.getElementsByTagName('IMG')
-function imgLoaded(){
-  LOADING.innerText = ((i/imgs.length)*100)+" LOADED"
+function imgLoaded(i){
+  LOADING.innerText = (Math.floor((i/imgs.length)*100))+"% LOADING..."
 }
 for (let i = 0; i < imgs.length; i++) {
   const img = imgs[i];
   if (img.complete) {
-    imgLoaded()
+    imgLoaded(i)
   } else {
-    img.addEventListener('load', imgLoaded)
+    img.addEventListener('load', ()=>{imgLoaded(i)})
     img.addEventListener('error', function() {
         alert('error')
     })
