@@ -7,6 +7,9 @@ const chat = {
 }
 
 function createMsg(name = localStorage.getItem("UserName"),profile = localStorage.getItem("UserProfile"),inp = chat.input.value){
+    if(profile == null){
+        profile = "man_profile.jpeg"
+    }
     if(inp.trim().length <= 0){
         return;
     }
