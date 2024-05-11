@@ -260,5 +260,3 @@ for (let i = 0; i < BTN.SETBTN.length; i++) {
     setting_page_open(e.currentTarget.innerText)
   })
 }
-//window resize control
-window.addEventListener("resize",()=>{window.location.reload()})
