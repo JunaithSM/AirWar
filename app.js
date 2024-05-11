@@ -10,6 +10,7 @@ const io = new Server(server);
 
 app.use("/game",express.static(path.join('Frontend')));
 app.use("/",express.static(path.join('home')));
+app.use(express.static('home'))
 const Game = new GAME()
 const NAMES = []
 io.on('connection', (socket) => {
