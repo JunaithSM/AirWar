@@ -13,13 +13,28 @@ for (let i = 0; i < PROFILE_PIC.length; i++) {
   createProfiles(pic)
 }
 
+
 //bg music
 
 const bgMusic = document.getElementById("backgroundmusic")
 
 //load
 const LOADING  = document.getElementById("loading")
-
+var imgs = document.getElementsByTagName('IMG')
+function imgLoaded(){
+  LOADING.innerText = ((i/imgs.length)*100)+" LOADED"
+}
+for (let i = 0; i < imgs.length; i++) {
+  const img = imgs[i];
+  if (img.complete) {
+    imgLoaded()
+  } else {
+    img.addEventListener('load', imgLoaded)
+    img.addEventListener('error', function() {
+        alert('error')
+    })
+  }
+}
 window.onerror = function() {
   LOADING.innerText = "Something went wrong \n:(\nPlease check connection.\nTry reloading page."
   LOADING.className = ""
