@@ -14,9 +14,8 @@ class Game{
     this.Enemy =[];
     this.Effect =[];
     this.socket = socket
-    this.background()
     this.time=0
-    this.Gamer = new Gamer(this.GAME.width/2,this.GAME.height-100,75,75,100)
+    this.Gamer = new Gamer(this.GAME.width/2,this.GAME.height-100,75,75,100,localStorage.getItem("UserName"))
   }
   clear(){
     this.ctx.clearRect(0,0,this.GAME.width,this.GAME.height);
@@ -36,7 +35,7 @@ class Game{
     this.Gamer.enemy_collision(this)
     if(this.Gamer.delay(5)&&this.Gamer.shoot){
         this.Gamer.create_bullet()
-        this.create_gunfire(this.Gamer.x+this.Gamer.width/2,this.Gamer.y,100,100)
+        this.create_gunfire(this.Gamer.x+this.Gamer.width/2,this.Gamer.y,50*Res,50*Res,2)
         this.socket.emit("bullet_add",this.Gamer.id)
     }
   }
@@ -57,8 +56,8 @@ class Game{
       this.Gamer.touch.y = (ev.touches[0].clientY*Res-this.Gamer.height/2)
     })
   }
-  create_player(x,y,id,health){
-    this.Player.push(new Player(x,y,75,75,health,id));
+  create_player(x,y,id,health,name){
+    this.Player.push(new Player(x,y,75,75,health,id,name));
   }
   handle_player(){
     for(let i =0;i<this.Player.length;i++){
@@ -92,8 +91,8 @@ class Game{
   create_effect(x,y,w,h){
     this.Effect.push(new Blast(x,y,w,h,"blastImg",4,2,3))
   }
-  create_gunfire(x,y,w,h){
-    this.Effect.push(new Blast(x,y,w,h,"gunfireImg",1,5,1))
+  create_gunfire(x,y,w,h,d =1){
+    this.Effect.push(new Blast(x,y,w,h,"gunfireImg",1,5,d))
   }
   handle_effect(){
     for(let i =0;i<this.Effect.length;i++){
@@ -111,26 +110,48 @@ class Game{
     this.handle_enemys()
     this.handle_effect()
   }
+  loadAllImage(){
+    var imgs = document.getElementsByTagName('img')
+    for (let i = 0; i < imgs.length; i++) {
+      const img = imgs[i]
+      if (img.complete) {
+        console.log('loaded',img.src)
+      } else {
+        img.addEventListener('load', loaded)
+        img.addEventListener('error', function() {
+            alert('error')
+        })
+      }
+    }
+  }
   background(){
     this.BACK=document.getElementById("background")
     this.bctx = this.BACK.getContext("2d")
     this.BACK.width=window.innerWidth
     this.BACK.height=window.innerHeight
     this.bg={
-      x:0,y:0,i:0,j:0,d:10,s:false,t:0
+      shake: 10,x:0,y:0,i:0,j:0,d:10,s:false,t:0,
     }
+    this.bg.x = -this.bg.shake;
+    this.bg.d = this.bg.shake;
     this.bgImg=[["seaseaImg","seagreenImg","searockImg"],["greenseaImg","greengreenImg","greenrockImg"],["rockseaImg","rockgreenImg","rockrockImg"]]
+    for(let i = 0;i<this.bgImg.length;i++){
+      for (let j = 0; j < this.bgImg[i].length; j++) {
+        console.log(document.getElementById(this.bgImg[i][j]));
+        
+      }
+     
+    }
   }
  
- moveBack(ctx){
+ moveBack(){
    
    this.bctx.clearRect(0,0,this.BACK.width,this.BACK.height)
-   let bgs = ["sea","green","rock"]
    let j=this.bg.j
    
    if(this.bg.y>=this.BACK.height*2){
      this.bg.y=0
-     this.time++ //(this.time > 10000)?0:this.time+1
+     this.time=(this.time > 10000)?0:this.time+1
      
      if(this.time%2==0){
       
@@ -146,24 +167,21 @@ class Game{
     let i1 = this.bgImg[i][j]
     let img = document.getElementById(i1.toString())
     let h= this.BACK.height,
-     w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
+     w=this.BACK.width+this.bg.shake
     
-    this.bctx.drawImage(img,this.bg.x-10,this.bg.y,w,h)
+    this.bctx.drawImage(img,this.bg.x,this.bg.y,w,h)
     j=this.bg.j
    
     let i2 = this.bgImg[i][j]
     img = document.getElementById(i2.toString())
-     w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
      
-    this.bctx.drawImage(img,this.bg.x-10,this.bg.y-this.BACK.height,w,h)
+    this.bctx.drawImage(img,this.bg.x,this.bg.y-this.BACK.height,w,h)
     i=j
       let i3 = this.bgImg[i][j]
     img = document.getElementById(i3.toString())
-     w=Math.floor(img.width/this.BACK.height)*(this.BACK.width+10)
-     
-    this.bctx.drawImage(img,this.bg.x-10,this.bg.y-this.BACK.height*2,w,h)
+    this.bctx.drawImage(img,this.bg.x,this.bg.y-this.BACK.height*2,w,h)
     this.bctx.closePath();
-    this.bg.y+=10
+    this.bg.y+=5
     if(this.Gamer.health_dec){
       this.bg.t=0
     }
@@ -174,10 +192,10 @@ class Game{
       if(this.Gamer.delay(2)){
       this.bg.x+=this.bg.d,this.bg.t++
       this.bg.d*=-1}
-    if(this.bg.t>=10){
+    if(this.bg.t>=this.bg.shake){
       this.bg.s=false
-      this.bg.x=0
-      this.bg.d=10
+      this.bg.x=-this.bg.shake
+      this.bg.d=this.bg.shake
     }
     }
   }
@@ -187,8 +205,10 @@ class Game{
     shadow.create_shadow()
   }
   run_game(){
+    this.loadAllImage()
     this.run_gamer()
     this.run_shadow()
+    this.background()
   }
 }
 

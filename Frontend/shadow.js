@@ -3,7 +3,7 @@ class Shadow{
     this.img = img;
     this.canvas = document.createElement("CANVAS")
     document.body.appendChild(this.canvas)
-    this.ctx = this.canvas.getContext("2d");
+    this.ctx = this.canvas.getContext("2d", { willReadFrequently: true });
   }
   create_shadow(){
     console.log(this.img)
@@ -14,7 +14,6 @@ class Shadow{
          this.canvas.style.width=`${w}px`
          this.canvas.height = h
          this.canvas.style.height=`${h}px`
-         console.log(w,h)
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height)
        this.ctx.drawImage(img,0,0,this.canvas.width,this.canvas.height)
        let ImgData = this.ctx.getImageData(0,0,this.canvas.width,this.canvas.height)
@@ -29,7 +28,6 @@ class Shadow{
        this.ctx.putImageData(ImgData,0,0);
        const IMG = document.createElement("IMG");
        IMG.src=this.canvas.toDataURL(`image/png`)
-       console.log("Created!")
        IMG.id = `${this.img[j]}Shadow`
        document.body.appendChild(IMG)
      }

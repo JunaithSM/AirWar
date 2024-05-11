@@ -3,8 +3,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+html{
+  overflow: hidden;
+  height: 100%;
+}
 body{
+  overflow: auto;
   overscroll-behavior: none; 
+
 }
 canvas{
   position: absolute;
@@ -20,6 +26,6 @@ img{
 #log{
   position: absolute;
   z-index:2;
-  color: white;
+  color: red;
   font-family: "Teko", sans-serif;
 }

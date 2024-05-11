@@ -11,17 +11,17 @@ const io = new Server(server);
 app.use("/game",express.static(path.join('Frontend')));
 app.use("/",express.static(path.join('home')));
 const Game = new GAME()
-
+const NAMES = []
 io.on('connection', (socket) => {
   socket.on('disconnect', () => {
    // console.log('user disconnected');
     Game.removePlayerInfo(socket.id)
     io.emit("player_remove",socket.id)
   });
-  socket.on("gamer_info",(x,y,health)=>{
+  socket.on("gamer_info",(x,y,health,name)=>{
     const id = socket.id
-    io.emit("gamer_info",x,y,id,health)
-    Game.getPlayerInfo(x,y,id,health)
+    io.emit("gamer_info",x,y,id,health,name)
+    Game.getPlayerInfo(x,y,id,health,name)
     Game.emitPlayer(io)
   });
   socket.on("player_update",(x,y,id,health)=>{
@@ -36,7 +36,9 @@ io.on('connection', (socket) => {
   socket.on('bullet_add',(id)=>{
     io.emit("bullet_add",id)
   })
-  
+  socket.on("chat_msg",(name,profile,msg)=>{
+    io.emit("chat_msg",name,profile,msg)
+  })
 });
 
 server.listen(PORT, () => {

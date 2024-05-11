@@ -29,12 +29,19 @@ class Character{
     ctx.save()
     ctx.beginPath()
     ctx.translate(this.x+this.width/2,this.y+this.height/2)
-    ctx.rotate(this.rotate*Math.PI/180)
+    ctx.rotate(this.rotate*Math.PI/180);
     ctx.drawImage(document.getElementById(this.img),-this.width/2, -this.width/2, this.width, this.height)
     ctx.closePath();
-    ctx.restore()
-    ctx.globalAlpha=1
-    this.healthBar(ctx)
+    ctx.restore();
+    ctx.globalAlpha=1;
+    this.healthBar(ctx);
+    ctx.beginPath()
+    ctx.fillStyle = "#fff"
+    ctx.textAlign = "center";
+    ctx.font = `${20*Res}px Teko`
+    ctx.fillText(this.name,this.x+this.width/2,this.y+this.height+20*Res, this.width, this.height)
+    ctx.fill()
+    ctx.closePath()
   }
   shadow(ctx){
     let x = this.x-5,y=this.y-5,w=this.width*0.7,h=this.height*0.7;
@@ -86,7 +93,6 @@ class Character{
      if(this.delay(2)){
     if(this.opacity < 1){
       this.opacity+=0.1*this.opdir
-      console.log(this.opacity)
       if((this.opacity >=1||this.opacity <= 0.2)&&!this.health_dec){
         this.opdir*=-1
         this.opacity+=0.1*this.opdir
@@ -121,12 +127,13 @@ class Character{
 }
 
 class Gamer extends Character{
-  constructor(x,y,w,h,health){
+  constructor(x,y,w,h,health,name){
     super(x,y,w,h,health)
     this.touch={
       x:this.x,y:this.y
     }
     this.img= "jetImg"
+    this.name = name
   }
   movement(game){
     if(this.touch.x <10*this.res||this.touch.x >game.width-this.width+10*this.res){return}
@@ -137,10 +144,11 @@ class Gamer extends Character{
   
 }
 class Player extends Character{
-  constructor(x,y,w,h,health,id){
+  constructor(x,y,w,h,health,id,name){
     super(x,y,w,h,health)
     this.id=id
     this.img= "jetImg"
+    this.name = name
   }
 }
 

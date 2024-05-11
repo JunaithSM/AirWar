@@ -26,9 +26,9 @@ const animate = ()=>{
    requestAnimationFrame(animate)
 }
 window.addEventListener("load",animate)
-socket.emit("gamer_info",Area.Gamer.x/Res,Area.Gamer.y/Res,Area.Gamer.health)
+socket.emit("gamer_info",Area.Gamer.x/Res,Area.Gamer.y/Res,Area.Gamer.health,Area.Gamer.name)
 let idcond = true;
-socket.on('gamer_info',(x,y,id,health)=>{
+socket.on('gamer_info',(x,y,id,health,name)=>{
   if(idcond){
     Area.Gamer.id = id
     idcond=false
@@ -36,14 +36,14 @@ socket.on('gamer_info',(x,y,id,health)=>{
   }
 })
 let i = 0
-socket.on("player_info",(x,y,id,health)=>{
+socket.on("player_info",(x,y,id,health,name)=>{
   if (id == Area.Gamer.id){return}
   for(let i=0;i<Area.Player.length;i++){
     if(id == Area.Player[i].id ){
       return
     }
   }
-  Area.create_player(x,y,id,health)
+  Area.create_player(x,y,id,health,name)
  // alert(i+" player joined "+id+" "+Area.Gamer.id)
 })
 socket.on("player_update",(x,y,id,health)=>{

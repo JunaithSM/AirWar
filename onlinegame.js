@@ -6,7 +6,7 @@ class GAME{
       x:0
     }
   }
-  getPlayerInfo(x,y,id,health){
+  getPlayerInfo(x,y,id,health,name){
     for( let i =0;i<this.Player.length;i++){
       const Player = this.Player[i]
     //  console.log(Player.id)
@@ -15,7 +15,7 @@ class GAME{
         return;
       }
     }
-    this.Player.push({x:x,y:y,id:id,health:health})
+    this.Player.push({x:x,y:y,id:id,health:health,name})
   }
   removePlayerInfo(id){
     for( let i =0;i<this.Player.length;i++){
@@ -32,7 +32,7 @@ class GAME{
       const p = this.Player[i]
     //  console.log(id!=p.id)
       if(id != p.id){
-      io.emit("player_info",p.x,p.y,p.id,p.health)
+      io.emit("player_info",p.x,p.y,p.id,p.health,p.name)
       }
     }
   }
