@@ -19,29 +19,34 @@ const bgMusic = document.getElementById("backgroundmusic")
 
 //load
 const LOADING  = document.getElementById("loading")
-setTimeout(()=>{
-  LOADING.innerText = "Please Wait..."
-},5000)
-setTimeout(()=>{
+
+window.onerror = function() {
   LOADING.innerText = "Something went wrong \n:(\nPlease check connection.\nTry reloading page."
   LOADING.className = ""
-},10000)
-window.addEventListener("load",()=>{
-  LOADING.innerText = "Loaded..."
-  setTimeout(()=>{
-    LOADING.innerText = "Tap to continue.."
-    LOADING.className = ""
-  },500)
-window.addEventListener("click",()=>{
-  document.getElementById("body1").style.display = "block"
-  LOADING.style.display = "none";
-  bgMusic.volume = 0.1
-  bgMusic.play()
-  bgMusic.loop = true
-})
+};
+try {
+  window.addEventListener("load",()=>{
+    LOADING.innerText = "Tap to continue"
+    window.addEventListener("click",()=>{
+      try {
+        if(!document.getElementById("body1")) throw "error"
+        document.getElementById("body1").style.display = "block"
+        bgMusic.volume = 0.1
+        bgMusic.play()
+        bgMusic.loop = true
+        LOADING.style.display = "none";
+      }catch(err){
+        LOADING.innerText = "Failed try again";
+      }
+    })
+  })
+  
+} 
+catch (err){
+  LOADING.innerText = "Something went wrong \n:(\nPlease check connection.\nTry reloading page."
+  LOADING.className = ""
+}
 
-
-})
 window.onload = function() {
   document.getElementById("backgroundmusic").play();
 }
