@@ -28,6 +28,7 @@ class Shadow{
        this.ctx.putImageData(ImgData,0,0);
        const IMG = document.createElement("IMG");
        IMG.src=this.canvas.toDataURL(`image/png`)
+       IMG.alt=`Shadow`
        IMG.id = `${this.img[j]}Shadow`
        document.body.appendChild(IMG)
      }

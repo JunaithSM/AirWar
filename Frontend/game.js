@@ -115,9 +115,11 @@ class Game{
     for (let i = 0; i < imgs.length; i++) {
       const img = imgs[i]
       if (img.complete) {
-        console.log('loaded',img.src)
+        console.log('loaded')
       } else {
-        img.addEventListener('load', loaded)
+        img.addEventListener('load', ()=>{
+          console.log("loaded");
+        })
         img.addEventListener('error', function() {
             alert('error')
         })
@@ -135,13 +137,6 @@ class Game{
     this.bg.x = -this.bg.shake;
     this.bg.d = this.bg.shake;
     this.bgImg=[["seaseaImg","seagreenImg","searockImg"],["greenseaImg","greengreenImg","greenrockImg"],["rockseaImg","rockgreenImg","rockrockImg"]]
-    for(let i = 0;i<this.bgImg.length;i++){
-      for (let j = 0; j < this.bgImg[i].length; j++) {
-        console.log(document.getElementById(this.bgImg[i][j]));
-        
-      }
-     
-    }
   }
  
  moveBack(){
