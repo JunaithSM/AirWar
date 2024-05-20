@@ -1,5 +1,5 @@
 # AIR ATTACK FORCE
-## Game Play link
+## Play Now
 https://airattackforce.online/
-## Introduction.
+## About.
 Air attack force is a 2D Mobile Game (Not for PC). Attack with your team mates or play Online with real player.
