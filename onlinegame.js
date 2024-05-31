@@ -36,16 +36,15 @@ class GAME{
       }
     }
   }
-  enemyLocation(){
-    let y=-Math.floor(Math.random()*10)-100,x=Math.floor(((Math.random()*650))/100)*100
-    while (this.enemy.x == x){
-      x=Math.floor(((Math.random()*650))/100)*100
-    }
-   let i=Math.floor(Math.random()*6)
+  enemyLocation(i){
+    i-=3
+    let y = -75-75*Math.abs(i),x =75*i- 75/2
+   let img=Math.floor(Math.random()*6)
+   
    // w=Math.floor(Math.random()*25)+50;
     let w=75
     this.enemy.x = x
-    return [x,y,w,w,i]
+    return [x,y,w,w,img]
   }
   delay(d){
     if(this.time>10000){this.time = 0}

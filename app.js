@@ -3,6 +3,7 @@ import express from "express"
 import { createServer } from 'http'
 import { Server } from 'socket.io'
 import path from 'path'
+import reload from 'reload'
 const PORT = process.env.PORT||3000
 const app = express();
 const server = createServer(app);
@@ -10,6 +11,7 @@ const io = new Server(server);
 
 app.use("/game",express.static(path.join('Frontend')));
 app.use("/",express.static(path.join('home')));
+app.use("/imgs",express.static(path.join('imgs')));
 app.use(express.static('home'))
 const Game = new GAME()
 const NAMES = []
@@ -28,9 +30,9 @@ io.on('connection', (socket) => {
   socket.on("player_update",(x,y,id,health)=>{
     io.emit("player_update",x,y,id,health)
   //  console.log(Game.enemyLocation())
-    if(Game.delay(100)){
-      for(let i=0;i<2;i++){
-      io.emit("enemy_add",Game.enemyLocation())
+    if(Game.delay(500)){
+      for(let i=0;i<7;i++){
+      io.emit("enemy_add",Game.enemyLocation(i))
       }
     }
   });
@@ -42,6 +44,14 @@ io.on('connection', (socket) => {
   })
 });
 
-server.listen(PORT, () => {
-  console.log('server running at http://localhost:'+PORT);
-});
+
+reload(app).then(function (reloadReturned) {
+  // reloadReturned is documented in the returns API in the README
+
+  // Reload started, start web server
+  server.listen(PORT, () => {
+    console.log('server running at http://localhost:'+PORT);
+  });
+}).catch(function (err) {
+  console.error('Reload could not start, could not start server/sample app', err)
+})

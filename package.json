@@ -17,6 +17,7 @@
   "dependencies": {
     "express": "^4.19.1",
     "path": "^0.12.7",
+    "reload": "^3.2.1",
     "socket.io": "^4.7.5"
   },
   "devDependencies": {

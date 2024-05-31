@@ -2,7 +2,7 @@ import {Character} from "./player.js"
 
 class Enemy extends Character{
   constructor(x,y,w,h,img){
-    super(x,y,w,h,100)
+    super(x+window.innerWidth/2,y,w,h,100)
     this.allHealth=[100,200,300,400,500,600]
     this.health = this.allHealth[img]
     this.MaxHealth= this.health
@@ -14,6 +14,10 @@ class Enemy extends Character{
   movement(){
     this.y+= this.speed
   }
-  
+  autoKillEnemy(){
+     if(this.x < 0 || this.x > window.innerWidth){
+      this.health = 0
+    } 
+  }
 }
 export {Enemy};

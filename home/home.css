@@ -6,6 +6,9 @@
   overscroll-behavior: none;
   user-select: none;
 }
+:root{
+  --theme_color:#115dff77;
+}
 #loading{
   position: absolute;
   font-size: 50px;
@@ -45,6 +48,16 @@ audio{
     transform: rotate(360deg);
   }
 }
+@keyframes blinkwhite {
+  0%{
+    text-shadow: 0 0 5px white;
+    color: white;
+  }
+  100%{
+    text-shadow: 0 0 0px white;
+    color: #aaa;  
+  }
+}
 button{
   border: none;
   outline: none;
@@ -72,7 +85,7 @@ button:hover{
 }
 .head{
   display: inline-block;
-  background-image:linear-gradient(120deg,transparent,black,black );
+  background-image:linear-gradient(120deg,var(--theme_color),black,black );
   width: 100%;
   height: 40px;
 }
@@ -85,7 +98,7 @@ button:hover{
   width: 100px;
   height: 50px;
   text-align: left;
-  background-image:linear-gradient(120deg,transparent,black,black 60%, transparent 60% 100%);
+  background-image:linear-gradient(120deg,var(--theme_color),black,black 60%, transparent 60% 100%);
   font-size: 30px;
   padding-left:10px;
   float:left;
@@ -117,7 +130,7 @@ button:hover{
   color: white;
   width: 120px;
   text-align: center;
-  background-image:linear-gradient(120deg,transparent,black,black 80%,transparent 80% 100%);
+  background-image:linear-gradient(120deg,var(--theme_color),black,black 80%,transparent 80% 100%);
   top:60px;
   padding: 5px;
   font-size: 17px;
@@ -127,7 +140,7 @@ button:hover{
   height: 35px;
   position: absolute;
   width: 100px;
-  background-image:linear-gradient(60deg,transparent 0% 20%,black 20%,black, transparent 100%);
+  background-image:linear-gradient(60deg,transparent 0% 20%,black 20%,black, var(--theme_color) 100%);
   top:60px;
   padding: 5px;
   right:0;
@@ -147,7 +160,7 @@ button:hover{
 .garage{
   position: absolute;
   bottom: 110px;
-  background-image:linear-gradient(120deg,transparent,black,black 60%,transparent 60% 100%);
+  background-image:linear-gradient(120deg,var(--theme_color),black,black 60%,transparent 60% 100%);
   font-size: 20px;
   height: 100px;
   width: 170px;
@@ -162,11 +175,11 @@ button:hover{
 .last{
   position: absolute;
   height: 100px;
-  top: calc( 100% - 100px);
+  bottom: 0;
   display: flex;
   width: 100%;
   padding: 1px;
-  background-image:linear-gradient(120deg,transparent,black,black );
+  background-image:linear-gradient(120deg,var(--theme_color),black,black );
   padding-left: 0;
 }
 .play{
@@ -197,7 +210,7 @@ button:hover{
 .setHead{
   width: 100%;
   display: flex;
-  background-image:linear-gradient(120deg,transparent,black,black );
+  background-image:linear-gradient(120deg,var(--theme_color),black,black );
   font-size: 17px;
   height: 40px;
 }
@@ -280,7 +293,7 @@ audio{
 .sendmsgarea button{
   font-size: 17px;
   padding-right: 5px;
-  
+  color:var(--theme_color);
 }
 
 .messge{
@@ -313,7 +326,7 @@ audio{
 }
 .roomsel, .accset{
   display: flex;
-  background-image:linear-gradient(120deg,transparent,black,black );
+  background-image:linear-gradient(120deg,var(--theme_color),black,black );
 
 }
 .roomsel button,.accset button{
@@ -328,13 +341,13 @@ audio{
 
 .resourses{
   position: absolute;
-  top: 150px;
-  right: 0;
+  top: 100px;
+  left: 0;
   
 }
 .coins{
   width: 100px;
-  background-image:linear-gradient(60deg,transparent 0% 20%,black 20%,black, transparent 80%);
+  background-image:linear-gradient(120deg,var(--theme_color),black 80%,transparent 80% 100%);
   color: white;
   font-size: 15px;
   height: 20px;
@@ -342,7 +355,7 @@ audio{
 .coinimg{
   width: 30px;
   height: 30px;
-  float: right;
+  float: left;
   margin-top: -5px;
 }
 .accprofile{
@@ -359,7 +372,7 @@ border-radius: 50%;
 margin: 10px 0;
 }
 .proname{
-  background-image:linear-gradient(120deg,transparent,black,black );
+  background-image:linear-gradient(120deg,var(--theme_color),black,black );
   text-align: center;
   font-size: 30px;
   width: 100%;
@@ -414,7 +427,7 @@ margin: 10px;
 .grapqual{
   display: flex;
   flex-direction: row;
-  background-image:linear-gradient(120deg,transparent,black,black );
+  background-image:linear-gradient(120deg,var(--theme_color),black,black );
   font-size: 20px;
   color: white;
   margin-top: 10px;
@@ -426,13 +439,20 @@ margin: 10px;
 .graphicbtn{
   padding: 5px;
 }
-
+.themeColor{
+  width: 20px;
+  height: 30px;
+  border-radius: 5px;
+  margin: 0 1px;
+  padding: 0;
+  border: 1px solid white;
+}
+.themeColor::after
 .setpage{
   display: none;
 }
 
 #hostRoom{
-  display: none;
 }
 #hostRoom > div{
   background-image:linear-gradient(120deg,black,transparent,black );
@@ -526,5 +546,107 @@ margin: 10px;
   border-radius:50%;
 }
 #joinedplayerhost div div{
-  flex: 3;
+  flex: 1;
+  width: fit-content;
+}
+
+#starthost{
+  width: 100px;
+  position: absolute;
+  bottom: 50px;
+  right: 20px;
+  font-size: 30px;
+  border: 2px solid white;
+  color: white;
+}
+#jetgrage{
+  overflow: hidden;
+}
+#jetsview{
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  background-image: url("../imgs/_dc20eabd-234e-4d2e-a2a0-cb7f0f0a2736.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+
+#currentjet{
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  top: 20%;
+  transform: translate(-50%,-50%);
+  transform: rotate(180deg);
+  background-image: url("../imgs/jets/jet.png");
+  background-position: center;
+  background-size:90%;
+  background-repeat: no-repeat;
+
+}
+
+#jetDetails{
+  padding: 10px;
+  background-image:linear-gradient(120deg,black,transparent,black );
+}
+#JetName,.tempRANK{
+  font-size: 22px;
+  text-align: center;
+}
+.updateNames{
+  font-size: 17px;
+  color: white;
+}
+.updateNames > span{
+  float: right;
+}
+.currentupdateDetails{
+  width: 100%;
+  height: 10px;
+  background-image:linear-gradient(120deg,var(--theme_color),black,black 90%,transparent 90% 100%);
+}
+
+#updateCost{
+  position: absolute;
+  z-index: 10;
+  background-image:linear-gradient(60deg,transparent 0% 30%,black 30%,black, gold 100%);
+  padding: 10px;
+  bottom: 150px;
+  right: 30px;
+  width: 100px;
+  height: 50px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-size: 20px;
+  text-align: right;
+  color: gold;
+}
+
+#updateCost > img{
+  width: 50px;
+  height: 50px;
+  float: right;
+  margin-left: 5px;
+  margin-right: -30px;
+  margin-top: -10px;
+
+}
+
+#footgarage{
+  position: absolute;
+  height: 100px;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  padding: 1px;
+  background-image:linear-gradient(120deg,var(--theme_color),black,black );
+  padding-left: 0;
+}
+
+#footgarage button{
+  background-color: none;
+    width: 100%;
+  margin-left: 1px;
 }

@@ -25,6 +25,7 @@
      crossorigin="anonymous"></script>
   </head>
   <body>
+    <script src="/reload/reload.js"></script>
     <div id="loading" class="loading">LOADING</div>
     <div id="body1">
       <audio src="/backmusic.mp3" id="backgroundmusic" type="audio/mpeg"></audio>
@@ -37,6 +38,7 @@
         <button class="material-icons shop">shopping_bag</button>
         <button class="material-icons mail dot">mail</button>
       </div>
+      
       <div class="middle">
         <div class="UserName NAME">JuanithSM</div>
         <button class="chats">
@@ -66,7 +68,7 @@
           <button class="setbtn">Contact</button>
           <button class="setbtn">About</button>
         </div>
-        <div class="setpage grapcontrol sGraphics">
+        <div class="setpage grapcontrol sGraphics" id="graphicpage">
           <div class="grapqual">
             <div>Rendering</div>
             <button class="graphicbtn" onclick="graphicsControl('STANDARD')">STANDARD</button>
@@ -75,6 +77,19 @@
             <button class="graphicbtn" onclick="graphicsControl('HIGH')">HIGH</button>
             <button class="graphicbtn" onclick="graphicsControl('ULTRA')">ULTRA</button>
             <button class="graphicbtn" onclick="graphicsControl('COSTUM')">COSTUM</button>
+          </div>
+          <div class="grapqual">
+            <div>Theme</div>
+            <button class="themeColor" style="background-color: #DA4453;" onclick="themeColors('#DA4453')"></button>
+            <button class="themeColor" style="background-color: #FC6E51;" onclick="themeColors('#FC6E51')"></button>
+            <button class="themeColor" style="background-color: #FFCE54;" onclick="themeColors('#FFCE54')"></button>
+            <button class="themeColor" style="background-color: #A0D468;" onclick="themeColors('#A0D468')"></button>
+            <button class="themeColor" style="background-color: #48CFAD;" onclick="themeColors('#48CFAD')"></button>
+            <button class="themeColor" style="background-color: #4FC1E9;" onclick="themeColors('#4FC1E9')"></button>
+            <button class="themeColor" style="background-color: #5D9CEC;" onclick="themeColors('#5D9CEC')"></button>
+            <button class="themeColor" style="background-color: #AC92EC;" onclick="themeColors('#AC92EC')"></button>
+            <button class="themeColor" style="background-color: #EC87C0;" onclick="themeColors('#EC87C0')"></button>
+            <button class="themeColor" style="background-color: #11111166;" onclick="themeColors('#F5F7FA00')"></button>
           </div>
         </div>
       </div>
@@ -100,14 +115,14 @@
           </div>
         </div>
       </div>
-      <div class="pages"id="roomPage">
+      <div class="pages" id="roomPage">
         <h1>Room</h1>
         <button class="back">⟨</button>
         <div class="roomsel">
-          <button>JOIN</button>
-          <button>HOST</button>
+          <button onclick="roomclick('join')">JOIN</button>
+          <button onclick="roomclick('host')">HOST</button>
         </div>
-        <div id="hostRoom">
+        <div id="hostRoom" class="roompage" style="display: none;">
           <input type="text" spellcheck="false" value="unkonwn" id="hostroomname">
           <div id="hostroomid">id: Juanith</div>
           <div id="select_map">
@@ -116,6 +131,7 @@
           <div class="roomsetting">
             <button>Private</button>
             <button>Public</button>
+            <button style="font-size: 17px;animation: blinkwhite 1s infinite;color: white; text-shadow: 0 0 5px white;" class="material-symbols-outlined">info</button>
             <div>
               <div>Number of Players </div>
               <button>⟨</button>
@@ -123,13 +139,16 @@
               <button>⟩</button>
             </div>
           </div>
-          <div>Player Joined</div>
+          <div >Player Joined </div>
           <div id="joinedplayerhost">
             <div>
               <img src="man1_profile.jpeg" alt="man1_profile">
               <div>Junaith</div>
+              <div></div>
               <div>lvl 1</div>
-              <button class="material-icons">person_add</button>
+              <div><button class="material-icons">person_add</button></div>
+              <div><button class="material-icons">person_remove</button></div>
+              
             </div>
             <div>
               <img src="man1_profile.jpeg" alt="man1_profile">
@@ -137,8 +156,9 @@
               <div>lvl 2</div>
             </div>
           </div>
-          <button>start</button>
+          <button id="starthost">start</button>
         </div>
+        <div id="joinRoom" class="roompage" style="display: none;"></div>
       </div>
       <div class="pages"  id="accountPage">
         <h1>Account</h1>
@@ -148,7 +168,7 @@
           <button onclick="buttonclick('connect')">Connect</button>
           <button onclick="buttonclick('friend')">Friends</button>
         </div>
-        <div class="accprofile" id="accprofile">
+        <div class="accprofile accpage" id="accprofile">
           <img src="man_profile.jpeg" alt="man_profile" id="profileImg" class="btnso">
           <div style="display: none;" id="chooseprofile"></div>
           <div class="proname"><span class="NAME"></span></div>
@@ -163,6 +183,40 @@
             <div>VAIRAM<span class="">10</span></div>
             <div>TIME<span class="">1:01:10</span></div>
           </div>
+        </div>
+        <div class="accpage"></div>
+        <div class="accpage"></div>
+      </div>
+      <div id="garagePage" class="pages">
+        <h1>Garage</h1>
+        <button class="back">⟨</button>
+        <div>
+          <div id="jetgrage">
+            <div id="jetsview">
+              <div id="jetDetails">
+                <div id="JetName">Fire Blaze</div>
+                <div class="tempRANK">Rank <span>990/1160</span></div>
+                <div class="updateNames">Aromor <span>60</span></div>
+                <div class="currentupdateDetails"></div>
+                <div class="updateNames">Fire Rate <span>90</span></div>
+                <div class="currentupdateDetails"></div>
+                <div class="updateNames">Damage <span>30</span></div>
+                <div class="currentupdateDetails"></div>
+                <div class="updateNames">Heal <span>50</span></div>
+                <div class="currentupdateDetails"></div>
+              </div>
+              <div id="currentjet"></div>
+            </div>
+          </div>
+          <button id="updateCost">200 <img src="./goldcoin.png" alt=""></button>
+        </div>
+        <div id="footgarage">
+          <button>⟨</button>
+          <button class="material-symbols-outlined">shield</button>
+          <button class="material-symbols-outlined">heart_plus</button>
+          <button class="material-symbols-outlined">bomb</button>
+          <button class="material-symbols-outlined">destruction</button>
+          <button>⟩</button>
         </div>
       </div>
     </div>

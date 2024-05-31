@@ -77,6 +77,7 @@ class Game{
       const p = this.Enemy[i]
       p.draw(this.ctx)
       p.movement()
+      p.autoKillEnemy()
       if(p.y> this.GAME.height||p.health<=0){
         this.create_effect(p.x,p.y,p.width,p.height)
         this.Enemy.splice(i,1);

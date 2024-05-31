@@ -31,7 +31,7 @@ for (let i = 0; i < imgs.length; i++) {
   } else {
     img.addEventListener('load', ()=>{imgLoaded(i)})
     img.addEventListener('error', function() {
-        alert('error')
+      LOADING.innerText = "Failed to Load Image.\n Try reloading the page."
     })
   }
 }
@@ -41,6 +41,17 @@ window.onerror = function() {
 };
 try {
   window.addEventListener("load",()=>{
+    Notification.requestPermission().then(perm=>{
+      if (perm =="granted") {
+        let notify = new Notification("Welcome Pilot!",{
+          body:`Welcome to Air Attack Force ${localStorage.getItem("UserName")}.`,
+          icon:USERPROFILE.src,
+          tag:"welcome msg"
+        })
+      }else{
+        alert("Please enable Notification.To get the latest Updates.")
+      }
+    })
     LOADING.innerText = "100% LOADING..."
     setTimeout(()=>{
       LOADING.innerText = "Tap to continue"
@@ -112,11 +123,13 @@ for (let i = 0; i < btn.length; i++) {
 
 //sound btn
 const btn_sound = document.getElementsByClassName("btnso")
-
+const playClickSound = ()=>{
+  document.getElementById("click").duration = 0
+  document.getElementById("click").play()
+}
 for (var i = 0; i < btn_sound.length; i++) {
   btn_sound[i].addEventListener("click",()=>{
-    document.getElementById("click").duration = 0
-    document.getElementById("click").play()
+   playClickSound();
    // document.getElementById("log").style.display="block"
     setTimeout(()=>{document.getElementById("log").style.display="none"},1000)
   })
@@ -126,6 +139,7 @@ for (var i = 0; i < btn_sound.length; i++) {
 
 
 const Open_Page = (page = false)=>{
+  
   const Pages = document.getElementsByClassName("pages")
   for(let  i =0; i < Pages.length;i++){
     const pg = Pages[i].style
@@ -134,7 +148,8 @@ const Open_Page = (page = false)=>{
   if(!page){
     return;
   }
- page.style.display = "block"
+  document.title = `Air Attack Force|Home`
+  page.style.display = "block"
 }
 
 //username storage
@@ -161,7 +176,8 @@ const PAGE = {
   CHAT:document.getElementById("chatPage"),
   ROOM:document.getElementById("roomPage"),
   PROFILE:document.getElementById("accountPage"),
-  SETPAGE:document.getElementsByClassName("setpage")
+  SETPAGE:document.getElementsByClassName("setpage"),
+  GARAGE:document.getElementById("garagePage")
 }
 
 const BTN ={
@@ -171,37 +187,60 @@ const BTN ={
   ROOM:document.getElementsByClassName("groups"),
   PROFILE:document.getElementsByClassName("profile"),
   SETBTN:document.getElementsByClassName("setbtn"),
+  GARAGE:document.getElementsByClassName("garage")
 }
 
 //set pg btn
 
-const set_page_btn = (btn,page)=>{
+const set_page_btn = (btn,page,minipage="",defaultPage = "")=>{
+
   for (let i = 0; i < btn.length; i++) {
     const btns = btn[i];
-    btns.addEventListener("click",()=>{
+    btns.addEventListener("click",(e)=>{
+      let minipages = document.getElementsByClassName(minipage)
+      if(minipage && defaultPage){
+      for (let i = 0; i < minipages.length; i++) {
+        minipages[i].style.display = "none"
+        
+      }
+      document.getElementById(defaultPage).style.display = ""}
+      if(!e.currentTarget.className.includes("clicked"))
+        e.currentTarget.className += " clicked"
       Open_Page(page)
       let str = page.id
       document.querySelector(`#${str} div button`).className += " clicked"
+      let pageName = str.slice(0,-4)
+      document.title = `Air Attack Force|${pageName[0].toUpperCase()+pageName.slice(1)}`
+      window.history.pushState({},"",pageName)
+
     });
   }
 }
 //colse and open page
-set_page_btn(BTN.SETTING,PAGE.SETTING)
+set_page_btn(BTN.SETTING,PAGE.SETTING,"setpage","graphicpage")
 set_page_btn(BTN.CHAT,PAGE.CHAT)
-set_page_btn(BTN.ROOM,PAGE.ROOM)
-set_page_btn(BTN.PROFILE,PAGE.PROFILE)
+set_page_btn(BTN.ROOM,PAGE.ROOM,"roompage","joinRoom")
+set_page_btn(BTN.GARAGE,PAGE.GARAGE)
+set_page_btn(BTN.PROFILE,PAGE.PROFILE,"accpage","accprofile")
 for (let i = 0; i < BTN.BACK.length; i++) {
   const btn = BTN.BACK[i];
   btn.addEventListener("click",()=>{
+    
     if(PAGE.CHAT.style.display == "block"){
       const dots = document.getElementsByClassName('chtbtn')[0]
     const str =  dots.className.replace(" dot","")
     dots.className = str
     }
     Open_Page()
-
+    window.history.back()
   });
 }
+window.onpopstate = ()=>{
+  Open_Page();
+  playClickSound();
+  document.title = `Air Attack Force|Home`
+}
+
 //notify to chat using dot 
 for (let i = 0; i < BTN.CHAT.length; i++) {
   const btn = BTN.CHAT[i];
@@ -260,3 +299,30 @@ for (let i = 0; i < BTN.SETBTN.length; i++) {
     setting_page_open(e.currentTarget.innerText)
   })
 }
+
+//roompage
+
+function roomclick(opt){
+  switch(opt){
+    case "join":
+      document.getElementById("joinRoom").style.display = "block"
+      document.getElementById("hostRoom").style.display = "none"
+      break;
+    case "host":
+      document.getElementById("joinRoom").style.display = "none"
+      document.getElementById("hostRoom").style.display = "block"
+      break;
+  }
+}
+
+//changeThemecolor
+const r = document.querySelector(':root')
+if(localStorage.getItem("themeColor")){
+  r.style.setProperty('--theme_color', localStorage.getItem("themeColor"))
+}
+function themeColors(color){
+  r.style.setProperty('--theme_color', color)
+  localStorage.setItem("themeColor",color)
+
+}
+

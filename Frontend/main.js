@@ -18,7 +18,7 @@ const animate = ()=>{
     f++
     if(e-t>=1000){
       let gr = ["Very Low","Low","Medium","High","Ultra","Ultra High","Super Ultimate"]
-     log("Render: "+f+" fps\n"+"Graphics: "+((Res<6)?gr[Math.floor(Res)]:gr[6]))
+     log("FPS: "+f+" fps\n"+"Render: "+((Res<6)?gr[Math.floor(Res)]:gr[6]))
       f=0
       c=true
       t = new Date().getTime()
