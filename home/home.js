@@ -44,9 +44,8 @@ try {
     Notification.requestPermission().then(perm=>{
       if (perm =="granted") {
         let notify = new Notification("Welcome Pilot!",{
-          body:`Welcome to Air Attack Force ${localStorage.getItem("UserName")}.`,
+          body:`Welcome back to Air Attack Force ${localStorage.getItem("UserName")}.`,
           icon:USERPROFILE.src,
-          tag:"welcome msg"
         })
       }else{
         alert("Please enable Notification.To get the latest Updates.")
