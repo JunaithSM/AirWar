@@ -1,4 +1,9 @@
 //profile pic
+const error = (msg)=>{
+  const Error =  document.getElementById("Error");
+  Error.style.display = "block"
+  Error.innerText = msg
+}
 const PROFILE_PIC = ["man_profile.jpeg","man1_profile.jpeg","man2_profile.jpeg","girl_profile.jpeg","girl1_profile.jpeg","girl2_profile.jpeg","robot_profile.jpeg","robot2_profile.jpeg"]
 const createProfiles = (pic)=>{
     let profile = document.getElementById("chooseprofile");
@@ -24,21 +29,27 @@ var imgs = document.getElementsByTagName('IMG')
 function imgLoaded(i){
   LOADING.innerText = (Math.floor((i/imgs.length)*100))+"% LOADING..."
 }
+
 for (let i = 0; i < imgs.length; i++) {
   const img = imgs[i];
   if (img.complete) {
     imgLoaded(i)
   } else {
-    img.addEventListener('load', ()=>{imgLoaded(i)})
-    img.addEventListener('error', function() {
+    img.addEventListener('load', ()=>{ imgLoaded(i) });
+    img.addEventListener('error', (e)=> {
+      error(e.type)
       LOADING.innerText = "Failed to Load Image.\n Try reloading the page."
     })
   }
 }
-window.onerror = function() {
+
+window.onerror = function(e) {
+  error(e.type)
   LOADING.innerText = "Something went wrong \n:(\nPlease check connection.\nTry reloading page."
   LOADING.className = ""
 };
+//show error
+
 try {
   window.addEventListener("load",()=>{
     Notification.requestPermission().then(perm=>{
@@ -59,13 +70,13 @@ try {
     
     window.addEventListener("click",()=>{
       try {
-        if(!document.getElementById("body1")) throw "error"
         document.getElementById("body1").style.display = "block"
         bgMusic.volume = 0.1
         bgMusic.play()
         bgMusic.loop = true
         LOADING.style.display = "none";
       }catch(err){
+        error(err)
         LOADING.innerText = "Failed try again";
       }
     })
@@ -75,10 +86,12 @@ try {
 catch (err){
   LOADING.innerText = "Something went wrong \n:(\nPlease check connection.\nTry reloading page."
   LOADING.className = ""
+  error(err)
 }
 
-window.onload = function() {
-  document.getElementById("backgroundmusic").play();
+async function backMusic(){
+const music = await document.getElementById("backgroundmusic")
+music.play()
 }
 
 //profile
