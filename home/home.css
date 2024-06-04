@@ -30,9 +30,11 @@
   text-align: center;
   z-index: 4;
   background-color: white;
+  background-image: radial-gradient(white,black);
   padding-top: 50%;
   color: #000;
 }
+
 audio{
   display: none;
 }
