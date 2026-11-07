@@ -3,7 +3,7 @@
 ![alt text][logo]
 ___
 ## Play Now
-https://airattackforce.online/
+https://airwar.onrender.com/
 ## About
 Air attack force is a 2D Mobile Game (Not for PC). Attack with your team mates or play Online with real player.
 ### Programmers
